@@ -1,0 +1,16 @@
+<div *ngIf="nodes!.length === 0">Loading nodes...</div>
+
+<mat-card *ngFor="let node of nodes!">
+  <mat-card-header>
+    <mat-card-title>{{ node.node }}</mat-card-title>
+    <mat-card-subtitle>Status: {{ node.status }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>CPU: {{ node.cpu | percent:'1.2-2' }} / {{ node.maxcpu }}</mat-list-item>
+      <mat-list-item>Memory: {{ node.mem | number }} / {{ node.maxmem | number }} bytes</mat-list-item>
+      <mat-list-item>Disk: {{ node.disk | number }} / {{ node.maxdisk | number }} bytes</mat-list-item>
+      <mat-list-item>Uptime: {{ node.uptime | number }} seconds</mat-list-item>
+    </mat-list>
+  </mat-card-content>
+</mat-card>
