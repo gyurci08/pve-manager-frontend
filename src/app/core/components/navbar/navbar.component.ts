@@ -26,7 +26,15 @@ import {UserDialogComponent} from './user-dialog/user-dialog.component';
 export class NavbarComponent {
   constructor(private dialog: MatDialog) {}
 
-  openUserAccountDialog(): void {
-    this.dialog.open(UserDialogComponent);
+  openUserAccountDialog(event: MouseEvent): void {
+    const dialogRef = this.dialog.open(UserDialogComponent, {
+      // Set the position of the dialog
+      position: {
+        top: `${event.clientY + 1}px`, // Add some offset if needed
+        left: `${event.clientX - 300}px` // Adjust based on your dialog width
+      },
+      width: '250px', // Set width as needed
+      height: 'auto' // Set height as needed
+    });
   }
 }
