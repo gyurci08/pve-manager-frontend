@@ -10,7 +10,14 @@ export class NodeService {
 
   constructor(private http: HttpClient) {}
 
+  // Method to get all nodes
   getNodes(): Observable<any> {
     return this.http.get<any>(this.apiUrl);
+  }
+
+  // Method to get a single node by its ID
+  getNode(nodeId: string): Observable<any> {
+    const url = `${this.apiUrl}/${nodeId}`; // Construct the URL for the specific node
+    return this.http.get<any>(url);
   }
 }

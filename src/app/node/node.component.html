@@ -1,0 +1,33 @@
+<div *ngIf="!node">Loading node details...</div>
+
+<mat-card *ngIf="node">
+  <mat-card-header>
+    <mat-card-title>Node Details: {{ node.node }}</mat-card-title>
+    <mat-card-subtitle>Status: {{ node.status }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <strong>CPU:</strong> {{ node.cpu | percent:'1.2-2' }} / {{ node.maxcpu }}
+      </mat-list-item>
+      <mat-list-item>
+        <strong>Memory:</strong> {{ node.mem / 1073741824 | number:'1.2-2' }} GB / {{ node.maxmem / 1073741824 | number:'1.2-2' }} GB
+      </mat-list-item>
+      <mat-list-item>
+        <strong>Disk:</strong> {{ node.disk / 1073741824 | number:'1.2-2' }} GB / {{ node.maxdisk / 1073741824 | number:'1.2-2' }} GB
+      </mat-list-item>
+      <mat-list-item>
+        <strong>Uptime:</strong> {{ node.uptime | number }} seconds
+      </mat-list-item>
+    </mat-list>
+
+    <h3>Virtual Machines</h3>
+    <mat-list *ngIf="vms && vms.length > 0">
+      <mat-list-item *ngFor="let vm of vms">
+        <strong>{{ vm.name }}</strong> - Status: {{ vm.status }}
+      </mat-list-item>
+    </mat-list>
+    <p *ngIf="!vms || vms.length === 0">No virtual machines found for this node.</p>
+  </mat-card-content>
+</mat-card>
