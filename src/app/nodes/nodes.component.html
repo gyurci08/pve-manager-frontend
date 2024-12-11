@@ -1,16 +1,32 @@
-<div *ngIf="nodes!.length === 0">Loading nodes...</div>
+<div *ngIf="nodes.length === 0">Loading nodes...</div>
 
-<mat-card *ngFor="let node of nodes!">
-  <mat-card-header>
-    <mat-card-title>{{ node.node }}</mat-card-title>
-    <mat-card-subtitle>Status: {{ node.status }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item>CPU: {{ node.cpu | percent:'1.2-2' }} / {{ node.maxcpu }}</mat-list-item>
-      <mat-list-item>Memory: {{ node.mem | number }} / {{ node.maxmem | number }} bytes</mat-list-item>
-      <mat-list-item>Disk: {{ node.disk | number }} / {{ node.maxdisk | number }} bytes</mat-list-item>
-      <mat-list-item>Uptime: {{ node.uptime | number }} seconds</mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+<mat-table [dataSource]="nodes" *ngIf="nodes.length > 0">
+
+  <!-- Node Column -->
+  <ng-container matColumnDef="node">
+    <mat-header-cell *matHeaderCellDef> Node </mat-header-cell>
+    <mat-cell *matCellDef="let node"> {{ node.node }} </mat-cell>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+    <mat-cell *matCellDef="let node"> {{ node.status }} </mat-cell>
+  </ng-container>
+
+  <!-- Max CPU Column -->
+  <ng-container matColumnDef="maxcpu">
+    <mat-header-cell *matHeaderCellDef> Max CPU </mat-header-cell>
+    <mat-cell *matCellDef="let node"> {{ node.maxcpu }} </mat-cell>
+  </ng-container>
+
+  <!-- Memory Column -->
+  <ng-container matColumnDef="mem">
+    <mat-header-cell *matHeaderCellDef> Memory </mat-header-cell>
+    <mat-cell *matCellDef="let node"> {{ node.mem / 1073741824 | number }} </mat-cell>
+  </ng-container>
+
+  <!-- Header and Row Declarations -->
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
