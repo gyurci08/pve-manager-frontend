@@ -5,6 +5,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {RouterModule} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {UserDialogComponent} from './user-dialog/user-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +17,16 @@ import {MatMenuModule} from '@angular/material/menu';
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  constructor(private dialog: MatDialog) {}
 
+  openUserAccountDialog(): void {
+    this.dialog.open(UserDialogComponent);
+  }
 }
