@@ -6,6 +6,7 @@ import {SidebarComponent} from './core/components/sidebar/sidebar.component';
 @Component({
   selector: 'app-root',
   imports: [
+    RouterOutlet,
     NavbarComponent,
     SidebarComponent
   ],

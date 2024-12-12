@@ -24,7 +24,7 @@ import {DashboardComponent} from '../../../pages/dashboard/dashboard.component';
 export class SidebarComponent {
 
   menuItems = [
-    { name: 'Dashboard', icon: 'dashboard', route: '/dashboard', component: DashboardComponent},
+    { name: 'Dashboard', icon: 'dashboard', route: '/dashboard'},
     { name: 'Provision', icon: 'build',     route: '/provision' },
     { name: 'Operation', icon: 'settings',  route: '/operation' }
   ];

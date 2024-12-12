@@ -16,4 +16,10 @@ export class CustomerService {
   getCustomers(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }
+
+  getCustomer(customerId:number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${customerId}`);
+  }
+
+
 }
