@@ -16,7 +16,7 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let vm">
-          <a [routerLink]="['/vm', vm.id]">{{vm.name}}</a>
+          <a [routerLink]="[vm.id]">{{vm.name}}</a>
         </td>
       </ng-container>
 
