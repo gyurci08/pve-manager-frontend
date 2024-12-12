@@ -8,6 +8,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -18,7 +19,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatProgressSpinnerModule,
     FormsModule,
-    MatInputModule
+    MatInputModule,
+    RouterLink
   ],
   templateUrl: './customers.component.html',
   standalone: true,
@@ -32,7 +34,7 @@ export class CustomersComponent implements OnInit, AfterViewInit {
   filteredCustomers: any[] = [];
   loading: boolean = true;
   searchTerm: string = '';
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = [ 'name'];
   private searchSubject = new Subject<string>();
 
   @ViewChild(MatTable) table!: MatTable<any>;
