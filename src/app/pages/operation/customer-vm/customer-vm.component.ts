@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {VmService} from '../../../services/vm-service';
-import {ActivatedRoute, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import {debounceTime, distinctUntilChanged, Subject} from 'rxjs';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import {CommonModule} from '@angular/common';
@@ -10,6 +10,9 @@ import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormsModule} from '@angular/forms';
 import {Vm} from '../../../entities/Vm';
+import {CustomerService} from '../../../services/customer-service';
+import {Customer} from '../../../entities/Customer';
+import {SearchableListComponent} from '../../../core/components/generic/searchable-list/searchable-list.component';
 
 @Component({
   selector: 'app-customer-vm',
@@ -21,77 +24,46 @@ import {Vm} from '../../../entities/Vm';
     MatTableModule,
     MatProgressSpinnerModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    SearchableListComponent
   ],
   templateUrl: './customer-vm.component.html',
   standalone: true,
   styleUrl: './customer-vm.component.scss'
 })
-export class CustomerVmComponent implements OnInit, AfterViewInit {
-
+export class CustomerVmComponent implements OnInit{
   constructor(
     private vmService: VmService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
+  customerId!:number;
   vms: Vm[] = [];
-  filteredVms: any[] = [];
-  loading: boolean = true;
-  searchTerm: string = '';
-  displayedColumns: string[] = ['name'];
-  private searchSubject = new Subject<string>();
-  customerId!: number;
-
-  @ViewChild(MatTable) table!: MatTable<any>;
+  isLoading = true;
+  error: string | null = null;
 
   ngOnInit() {
     this.customerId = +this.route.snapshot.paramMap.get('customerId')!;
-    this.loadVms();
-    this.setupSearch();
+    this.fetchCustomers();
   }
 
-  ngAfterViewInit() {
-    this.initializeTable();
-  }
-
-  loadVms() {
+  fetchCustomers(): void {
+    this.isLoading = true;
     this.vmService.getVms(this.customerId).subscribe({
       next: (data) => {
         this.vms = data;
-        this.filteredVms = data;
-        this.loading = false;
-        this.initializeTable();
+        this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error fetching vms:', error);
-        this.loading = false;
+      error: (err) => {
+        this.error = 'Failed to fetch customers. Please try again later.';
+        this.isLoading = false;
+        console.error('Error fetching customers:', err);
       }
     });
   }
 
-  setupSearch() {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(searchTerm => {
-      this.filterVms(searchTerm);
-    });
-  }
-
-  onSearchChange(searchTerm: string) {
-    this.searchSubject.next(searchTerm);
-  }
-
-  filterVms(searchTerm: string) {
-    this.filteredVms = this.vms.filter(vm =>
-      vm.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    this.initializeTable();
-  }
-
-  private initializeTable() {
-    if (this.table) {
-      this.table.renderRows();
-    }
+  onVmClick(vm: Vm) {
+    this.router.navigate(['/operation/customer', this.customerId,'vm',vm.id]);
   }
 }

@@ -1,31 +1,15 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title>Virtual Machines</mat-card-title>
+    <mat-card-title>Customers</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Search Virtual Machines</mat-label>
-      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" placeholder="Enter vm name">
-    </mat-form-field>
-
-    <div *ngIf="loading" class="spinner-container">
-      <mat-spinner></mat-spinner>
-    </div>
-
-    <table mat-table [dataSource]="filteredVms" class="mat-elevation-z8" *ngIf="!loading">
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let vm">
-          <a [routerLink]="[vm.id]">{{vm.name}}</a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <div *ngIf="!loading && filteredVms.length === 0" class="no-data">
-      No vms found.
-    </div>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <p *ngIf="error">{{ error }}</p>
+    <app-searchable-list
+      *ngIf="!isLoading && !error"
+      [data]="vms"
+      [displayedColumns]="['name']"
+      (rowClick)="onVmClick($event)">
+    </app-searchable-list>
   </mat-card-content>
 </mat-card>

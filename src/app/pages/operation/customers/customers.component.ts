@@ -8,9 +8,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {Customer} from '../../../entities/Customer';
-import {SearchableListComponent} from '../../../core/components/searchable-list/searchable-list.component';
+import {SearchableListComponent} from '../../../core/components/generic/searchable-list/searchable-list.component';
 
 @Component({
   selector: 'app-customers',
@@ -26,7 +26,10 @@ import {SearchableListComponent} from '../../../core/components/searchable-list/
   styleUrl: './customers.component.scss'
 })
 export class CustomersComponent implements OnInit {
-  constructor(private customerService: CustomerService) {}
+  constructor(
+    private customerService: CustomerService,
+    private router:Router
+  ) {}
 
   customers: Customer[] = [];
   isLoading = true;
@@ -52,7 +55,6 @@ export class CustomersComponent implements OnInit {
   }
 
   onCustomerClick(customer: Customer) {
-    // Handle customer click, e.g., navigate to customer details
-    console.log('Customer clicked:', customer);
+    this.router.navigate(['/operation/customer', customer.id]);
   }
 }

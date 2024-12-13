@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
+import {Vm} from '../entities/Vm';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,12 @@ export class VmService {
 
   constructor(private http: HttpClient) {}
 
-  getVms(customerId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${customerId}/vm`);
+  getVms(customerId: number): Observable<Vm[]> {
+    return this.http.get<Vm[]>(`${this.apiUrl}/${customerId}/vm`);
   }
 
-  getVm(customerId:number, vmId:number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${customerId}/vm/${vmId}`);
+  getVm(customerId:number, vmId:number): Observable<Vm> {
+    return this.http.get<Vm>(`${this.apiUrl}/${customerId}/vm/${vmId}`);
   }
 
 }
