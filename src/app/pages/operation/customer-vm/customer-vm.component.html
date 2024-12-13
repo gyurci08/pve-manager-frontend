@@ -8,7 +8,7 @@
     <app-searchable-list
       *ngIf="!isLoading && !error"
       [data]="vms"
-      [displayedColumns]="['name']"
+      [displayedColumns]="['name','status']"
       (rowClick)="onVmClick($event)">
     </app-searchable-list>
   </mat-card-content>
