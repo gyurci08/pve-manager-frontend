@@ -14,4 +14,9 @@ export class VmService {
   getVms(customerId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/${customerId}/vm`);
   }
+
+  getVm(customerId:number, vmId:number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${customerId}/vm/${vmId}`);
+  }
+
 }

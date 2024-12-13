@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormsModule} from '@angular/forms';
+import {Vm} from '../../../entities/Vm';
 
 @Component({
   selector: 'app-customer-vm',
@@ -33,7 +34,7 @@ export class CustomerVmComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute
   ) {}
 
-  vms: any[] = [];
+  vms: Vm[] = [];
   filteredVms: any[] = [];
   loading: boolean = true;
   searchTerm: string = '';

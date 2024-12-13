@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>VM Details</mat-card-title>
+  </mat-card-header>
+
+  <div *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-card-content *ngIf="!loading && vm">
+    <table>
+      <tr>
+        <th>Name</th>
+        <td>{{vm.name}}</td>
+      </tr>
+      <tr>
+        <th>ID</th>
+        <td>{{vm.id}}</td>
+      </tr>
+      <tr>
+        <th>Status</th>
+        <td>{{vm.status | uppercase}}</td>
+      </tr>
+      <tr>
+        <th>Created At</th>
+        <td>{{vm.createdAt | date:'medium'}}</td>
+      </tr>
+      <!-- Add more properties as needed -->
+    </table>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button [routerLink]="['/operation/customer', customerId, 'vm']">Back to VMs</button>
+  </mat-card-actions>
+</mat-card>

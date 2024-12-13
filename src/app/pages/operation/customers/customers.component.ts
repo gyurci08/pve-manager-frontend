@@ -9,83 +9,50 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import {RouterLink} from '@angular/router';
+import {Customer} from '../../../entities/Customer';
+import {SearchableListComponent} from '../../../core/components/searchable-list/searchable-list.component';
 
 @Component({
   selector: 'app-customers',
   imports: [
     CommonModule,
-    MatTableModule,
-    MatFormFieldModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    FormsModule,
-    MatInputModule,
-    RouterLink
+    RouterLink,
+    SearchableListComponent
   ],
   templateUrl: './customers.component.html',
   standalone: true,
   styleUrl: './customers.component.scss'
 })
-export class CustomersComponent implements OnInit, AfterViewInit {
-
+export class CustomersComponent implements OnInit {
   constructor(private customerService: CustomerService) {}
 
-  customers: any[] = [];
-  filteredCustomers: any[] = [];
-  loading: boolean = true;
-  searchTerm: string = '';
-  displayedColumns: string[] = [ 'name'];
-  private searchSubject = new Subject<string>();
-
-  @ViewChild(MatTable) table!: MatTable<any>;
+  customers: Customer[] = [];
+  isLoading = true;
+  error: string | null = null;
 
   ngOnInit() {
-    this.loadCustomers();
-    this.setupSearch();
+    this.fetchCustomers();
   }
 
-  ngAfterViewInit() {
-    this.initializeTable();
-  }
-
-  loadCustomers() {
+  fetchCustomers(): void {
+    this.isLoading = true;
     this.customerService.getCustomers().subscribe({
       next: (data) => {
         this.customers = data;
-        this.filteredCustomers = data;
-        this.loading = false;
-        this.initializeTable();
+        this.isLoading = false;
       },
-      error: (error) => {
-        console.error('Error fetching customers:', error);
-        this.loading = false;
+      error: (err) => {
+        this.error = 'Failed to fetch customers. Please try again later.';
+        this.isLoading = false;
+        console.error('Error fetching customers:', err);
       }
     });
   }
 
-  setupSearch() {
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe(searchTerm => {
-      this.filterCustomers(searchTerm);
-    });
-  }
-
-  onSearchChange(searchTerm: string) {
-    this.searchSubject.next(searchTerm);
-  }
-
-  filterCustomers(searchTerm: string) {
-    this.filteredCustomers = this.customers.filter(customer =>
-      customer.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    this.initializeTable();
-  }
-
-  private initializeTable() {
-    if (this.table) {
-      this.table.renderRows();
-    }
+  onCustomerClick(customer: Customer) {
+    // Handle customer click, e.g., navigate to customer details
+    console.log('Customer clicked:', customer);
   }
 }

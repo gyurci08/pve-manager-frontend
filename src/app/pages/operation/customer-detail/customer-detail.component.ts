@@ -9,7 +9,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {VmService} from '../../../services/vm-service';
 import {Customer} from '../../../entities/Customer';
 
 
@@ -50,7 +49,6 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   loadCustomer() {
-
     this.customerService.getCustomer(this.customerId).pipe(
       // @ts-ignore
       map(data => new Customer(data)),

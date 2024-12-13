@@ -3,30 +3,13 @@
     <mat-card-title>Customers</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Search Customers</mat-label>
-      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)" placeholder="Enter customer name">
-    </mat-form-field>
-
-    <div *ngIf="loading" class="spinner-container">
-      <mat-spinner></mat-spinner>
-    </div>
-
-    <table mat-table [dataSource]="filteredCustomers" class="mat-elevation-z8" *ngIf="!loading">
-
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let customer">
-          <a [routerLink]="['customer', customer.id]">{{customer.name}}</a>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-    <div *ngIf="!loading && filteredCustomers.length === 0" class="no-data">
-      No customers found.
-    </div>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <p *ngIf="error">{{ error }}</p>
+    <app-searchable-list
+      *ngIf="!isLoading && !error"
+      [data]="customers"
+      [displayedColumns]="['name']"
+      (rowClick)="onCustomerClick($event)">
+    </app-searchable-list>
   </mat-card-content>
 </mat-card>

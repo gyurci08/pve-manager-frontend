@@ -2,6 +2,7 @@ import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Injectable} from '@angular/core';
+import {Customer} from '../entities/Customer';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class CustomerService {
 
   constructor(private http: HttpClient) {}
 
-  getCustomers(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+  getCustomers(): Observable<Customer[]> {
+    return this.http.get<Customer[]>(this.apiUrl);
   }
 
-  getCustomer(customerId:number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${customerId}`);
+  getCustomer(customerId:number): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/${customerId}`);
   }
 
 

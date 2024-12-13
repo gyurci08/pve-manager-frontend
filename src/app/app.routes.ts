@@ -5,6 +5,7 @@ import {OperationComponent} from './pages/operation/operation.component';
 import {CustomerDetailComponent} from './pages/operation/customer-detail/customer-detail.component';
 import {CustomersComponent} from './pages/operation/customers/customers.component';
 import {CustomerVmComponent} from './pages/operation/customer-vm/customer-vm.component';
+import {CustomerVmDetailComponent} from './pages/operation/customer-vm-detail/customer-vm-detail.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -16,8 +17,8 @@ export const routes: Routes = [
     children: [
       { path: '', component: CustomersComponent },
       { path: 'customer/:customerId', component: CustomerDetailComponent },
-      { path: 'customer/:customerId/vm', component: CustomerVmComponent }
-      // { path: 'customer/:customerId/vm/:vmId', component: VmDetailComponent }
+      { path: 'customer/:customerId/vm', component: CustomerVmComponent },
+      { path: 'customer/:customerId/vm/:vmId', component: CustomerVmDetailComponent }
     ]
   }
 ];
